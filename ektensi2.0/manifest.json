@@ -1,0 +1,46 @@
+{
+  "manifest_version": 3,
+  "name": "EMR Assesmen Monitor",
+  "version": "1.3.3",
+  "description": "Pengingat waktu asesmen keperawatan dan pencatat waktu kerja pada RME.",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://rme.rsudrtnotopuro.co.id/*",
+    "https://script.google.com/*",
+    "https://script.googleusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://rme.rsudrtnotopuro.co.id/*"
+      ],
+      "js": [
+        "maskot.js",
+        "content.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "EMR Assesmen Monitor",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "options_page": "options.html"
+}

@@ -1,0 +1,81 @@
+#emr-widget {
+  position: fixed;
+  left: var(--emr-left, 20px);      /* ubah angka ini untuk menggeser posisi */
+  bottom: var(--emr-bottom, 72px);  /* 72px = di atas kartu user di sidebar */
+  z-index: 2147483000;
+  display: none;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  pointer-events: none;
+}
+#emr-widget > * { pointer-events: auto; }
+
+#emr-bubble {
+  display: none;
+  position: relative;
+  max-width: 240px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: #ff5a5f;
+  color: #fff;
+  font-size: 13px;
+  line-height: 1.35;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .25);
+}
+#emr-bubble.show { display: block; }
+#emr-bubble::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  bottom: -12px;
+  border: 7px solid transparent;
+  border-top-color: #ff5a5f;
+}
+#emr-bubble.late { background: #c62d3a; }
+#emr-bubble.late::after { border-top-color: #c62d3a; }
+
+#emr-icon {
+  width: 58px;
+  height: 58px;
+  padding: 6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+  cursor: default;
+}
+#emr-icon svg { width: 100%; height: 100%; display: block; }
+
+.emr-eye { fill: #5eead4; }
+.emr-led { fill: #94a3b8; }
+.emr-warn .emr-eye { fill: #ff6b6b; }
+.emr-warn .emr-led { fill: #ff3b45; animation: emr-blink 0.9s steps(2, start) infinite; }
+.emr-warn #emr-icon { animation: emr-bob 1.4s ease-in-out infinite; }
+
+@keyframes emr-blink { to { opacity: .15; } }
+@keyframes emr-bob { 50% { transform: translateY(-4px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .emr-warn .emr-led, .emr-warn #emr-icon { animation: none; }
+}
+
+/* ---- Mode List Pasien: maskot menggantikan robot ---- */
+#emr-maskot {
+  display: none;
+  width: 96px;
+  height: auto;
+  pointer-events: none;      /* klik tembus ke tombol di bawahnya */
+  user-select: none;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, .28));
+}
+#emr-widget.emr-list {
+  left: var(--emr-list-left, calc(25% + 12px));   /* tepat di kanan panel daftar pasien */
+  bottom: var(--emr-list-bottom, 56px);           /* di atas bar "Pilih Pasien" */
+}
+#emr-widget.emr-list #emr-icon { display: none; }
+#emr-widget.emr-list #emr-maskot { display: block; }
+#emr-widget.emr-list #emr-bubble { pointer-events: none; }
+.emr-warn #emr-maskot { animation: emr-bob 1.4s ease-in-out infinite; }
+@media (prefers-reduced-motion: reduce) { .emr-warn #emr-maskot { animation: none; } }
